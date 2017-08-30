@@ -28,7 +28,7 @@ module.exports = {
     },
   },
   postgres: {
-    database: process.env.TRAVIS ? 'travis_ci_test' : 'federalist-test',
+    database: process.env.CI ? 'federalist-ci-test' : 'federalist-test',
   },
   log: {
     level: 'error',
