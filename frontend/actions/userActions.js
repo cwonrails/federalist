@@ -3,20 +3,20 @@ import { dispatch } from '../store';
 import {
   userFetchStarted as createUserFetchStartedAction,
   userReceived as createUserReceivedAction,
-} from "./actionCreators/userActions";
+} from './actionCreators/userActions';
 
 const dispatchUserFetchStartedAction = () => {
-  dispatch(createUserFetchStartedAction())
-}
+  dispatch(createUserFetchStartedAction());
+};
 
-const dispatchUserReceivedAction = user => {
+const dispatchUserReceivedAction = (user) => {
   dispatch(createUserReceivedAction(user));
 };
 
 export default {
   fetchUser() {
-    dispatchUserFetchStartedAction()
+    dispatchUserFetchStartedAction();
     return federalist.fetchUser()
-      .then(dispatchUserReceivedAction)
+      .then(dispatchUserReceivedAction);
   },
 };

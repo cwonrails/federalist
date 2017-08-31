@@ -9,7 +9,7 @@ module.exports = {
       scope: ['user', 'repo', 'write:repo_hook'],
     },
     organizations: [
-      6233994,  // 18f
+      6233994, // 18f
       14109682, // federalist-users
     ],
   },

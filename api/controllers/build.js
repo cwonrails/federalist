@@ -11,34 +11,34 @@ module.exports = {
     let site;
 
     Promise.resolve(Number(req.params.site_id))
-    .then((id) => {
-      if (isNaN(id)) {
-        const error = new Error();
-        error.status = 404;
-        throw error;
-      }
-      return Site.findById(id);
-    })
-    .then((model) => {
-      if (!model) {
-        const error = new Error();
-        error.status = 404;
-        throw error;
-      }
-
-      site = model;
-      return siteAuthorizer.findOne(req.user, site);
-    })
-    .then(() =>
-      Build.findAll({
-        where: { site: site.id },
-        order: [['createdAt', 'desc']],
-        limit: 100,
+      .then((id) => {
+        if (isNaN(id)) {
+          const error = new Error();
+          error.status = 404;
+          throw error;
+        }
+        return Site.findById(id);
       })
-    )
-    .then(builds => buildSerializer.serialize(builds))
-    .then(buildJSON => res.json(buildJSON))
-    .catch(res.error);
+      .then((model) => {
+        if (!model) {
+          const error = new Error();
+          error.status = 404;
+          throw error;
+        }
+
+        site = model;
+        return siteAuthorizer.findOne(req.user, site);
+      })
+      .then(() =>
+        Build.findAll({
+          where: { site: site.id },
+          order: [['createdAt', 'desc']],
+          limit: 100,
+        })
+      )
+      .then(builds => buildSerializer.serialize(builds))
+      .then(buildJSON => res.json(buildJSON))
+      .catch(res.error);
   },
 
   create: (req, res) => {
@@ -50,64 +50,64 @@ module.exports = {
     };
 
     authorizer.create(req.user, params)
-    .then(() => Build.create(params))
-    .then(build =>
-      GithubBuildStatusReporter.reportBuildStatus(build)
-      .then(() => build)
-    )
-    .then(build => buildSerializer.serialize(build))
-    .then(buildJSON => res.json(buildJSON))
-    .catch(res.error);
+      .then(() => Build.create(params))
+      .then(build =>
+        GithubBuildStatusReporter.reportBuildStatus(build)
+          .then(() => build)
+      )
+      .then(build => buildSerializer.serialize(build))
+      .then(buildJSON => res.json(buildJSON))
+      .catch(res.error);
   },
 
   findOne: (req, res) => {
     let build;
 
     Promise.resolve(Number(req.params.id))
-    .then((id) => {
-      if (isNaN(id)) {
-        const error = new Error();
-        error.status = 404;
-        throw error;
-      }
-      return Build.findById(id);
-    })
-    .then((model) => {
-      if (model) {
-        build = model;
-      } else {
-        res.notFound();
-      }
-      return authorizer.findOne(req.user, build);
-    })
-    .then(() => buildSerializer.serialize(build))
-    .then(buildJSON => res.json(buildJSON))
-    .catch(res.error);
+      .then((id) => {
+        if (isNaN(id)) {
+          const error = new Error();
+          error.status = 404;
+          throw error;
+        }
+        return Build.findById(id);
+      })
+      .then((model) => {
+        if (model) {
+          build = model;
+        } else {
+          res.notFound();
+        }
+        return authorizer.findOne(req.user, build);
+      })
+      .then(() => buildSerializer.serialize(build))
+      .then(buildJSON => res.json(buildJSON))
+      .catch(res.error);
   },
 
   status: (req, res) => {
     const message = decodeb64(req.body.message);
 
     Promise.resolve(Number(req.params.id))
-    .then((id) => {
-      if (isNaN(id)) {
-        const error = new Error();
-        error.status = 404;
-        throw error;
-      }
-      return Build.findById(id);
-    })
-    .then((build) => {
-      if (!build) {
-        const error = new Error();
-        error.status = 404;
-        throw error;
-      } else {
-        return build.completeJob(message);
-      }
-    })
-    .then(build => GithubBuildStatusReporter.reportBuildStatus(build))
-    .then(() => res.ok())
-    .catch(res.error);
+      .then((id) => {
+        if (isNaN(id)) {
+          const error = new Error();
+          error.status = 404;
+          throw error;
+        }
+        return Build.findById(id);
+      })
+      .then((build) => {
+        if (!build) {
+          const error = new Error();
+          error.status = 404;
+          throw error;
+        } else {
+          return build.completeJob(message);
+        }
+      })
+      .then(build => GithubBuildStatusReporter.reportBuildStatus(build))
+      .then(() => res.ok())
+      .catch(res.error);
   },
 };

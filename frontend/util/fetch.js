@@ -3,13 +3,13 @@ import 'whatwg-fetch';
 const defaultMethod = 'GET';
 const credentials = 'same-origin';
 const defaultHeaders = {
-  'Accept': 'application/json',
-  'Content-Type': 'application/json'
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
 };
 
 function mergeParams(url, params) {
   return Object.keys(params).reduce((memo, param, index) => {
-    memo += ((!index ? '?' : '&') + `${param}=${params[param]}`);
+    memo += (`${!index ? '?' : '&'}${param}=${params[param]}`);
 
     return memo;
   }, url);
@@ -26,7 +26,7 @@ function checkStatus(response) {
 
     try {
       formattedError = JSON.parse(errorText).message;
-    } catch(error) {
+    } catch (error) {
       formattedError = errorText;
     }
 
@@ -49,7 +49,7 @@ function _fetch(url, configs = {}) {
   const baseConfigs = {
     credentials: configs.credentials || credentials,
     headers: Object.assign({}, defaultHeaders, configs.headers || {}),
-    method: configs.method || defaultMethod
+    method: configs.method || defaultMethod,
   };
 
   let requestConfigs;
@@ -57,7 +57,7 @@ function _fetch(url, configs = {}) {
 
   if (configs.method && !(/get|delete/i).test(configs.method)) {
     requestConfigs = Object.assign(baseConfigs, {}, {
-      body: JSON.stringify(configs.data)
+      body: JSON.stringify(configs.data),
     });
   } else {
     requestConfigs = baseConfigs;
@@ -70,4 +70,4 @@ function _fetch(url, configs = {}) {
     .then(parseJSON);
 }
 
-export default _fetch
+export default _fetch;

@@ -77,7 +77,7 @@ function completeJob(err) {
 
   return completeJobStateUpdate(err, this, completedAt)
     .then(build => completeJobSiteUpdate(build, completedAt)
-    .then(() => build));
+      .then(() => build));
 }
 
 function toJSON() {

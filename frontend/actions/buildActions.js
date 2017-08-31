@@ -5,25 +5,25 @@ import {
   buildsFetchStarted as createBuildsFetchStartedAction,
   buildsReceived as createBuildsReceivedAction,
   buildRestarted as createBuildRestartedAction,
-} from "./actionCreators/buildActions";
+} from './actionCreators/buildActions';
 
 const dispatchBuildsFetchStartedAction = () => {
-  dispatch(createBuildsFetchStartedAction())
-}
+  dispatch(createBuildsFetchStartedAction());
+};
 
-const dispatchBuildsReceivedAction = builds => {
-  dispatch(createBuildsReceivedAction(builds))
-}
+const dispatchBuildsReceivedAction = (builds) => {
+  dispatch(createBuildsReceivedAction(builds));
+};
 
-const dispatchBuildRestartedAction = build => {
-  dispatch(createBuildRestartedAction(build))
+const dispatchBuildRestartedAction = (build) => {
+  dispatch(createBuildRestartedAction(build));
 };
 
 export default {
   fetchBuilds(site) {
-    dispatchBuildsFetchStartedAction()
+    dispatchBuildsFetchStartedAction();
     return api.fetchBuilds(site)
-      .then(dispatchBuildsReceivedAction)
+      .then(dispatchBuildsReceivedAction);
   },
 
   restartBuild(build) {

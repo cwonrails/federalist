@@ -5,7 +5,7 @@ const propTypes = {
   value: React.PropTypes.bool,
   checked: React.PropTypes.bool,
   labelText: React.PropTypes.string,
-  handleChange: React.PropTypes.func.isRequired
+  handleChange: React.PropTypes.func.isRequired,
 };
 
 class RadioInput extends React.Component {
@@ -23,8 +23,8 @@ class RadioInput extends React.Component {
     props.handleChange({
       target: {
         name: props.name,
-        value: props.value
-      }
+        value: props.value,
+      },
     });
   }
 
@@ -34,10 +34,11 @@ class RadioInput extends React.Component {
     return (
       <div className="radio" onClick={this.onChange}>
         <input
-          readOnly={true}
+          readOnly
           type="radio"
           checked={checked}
-          name={name} />
+          name={name}
+        />
         <label htmlFor={name}>
           {labelText}
         </label>

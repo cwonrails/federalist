@@ -106,7 +106,7 @@ class TemplateSite extends React.Component {
                 />
                 <input type="submit" value="Create site" />
               </form>
-            : null}
+              : null}
           </div>
         </div>
       </div>

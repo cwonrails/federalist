@@ -2,7 +2,7 @@ import React from 'react';
 import SideNavItem from './sideNavItem';
 
 const propTypes = {
-  siteId: React.PropTypes.string
+  siteId: React.PropTypes.string,
 };
 
 export const sideNavPaths = {
@@ -12,7 +12,7 @@ export const sideNavPaths = {
 };
 
 class SideNav extends React.Component {
-  getUrl(id, path='') {
+  getUrl(id, path = '') {
     // strip trailing slashes, just in case.
     return `/sites/${id}/${path}`.replace(/\/$/, '');
   }
@@ -25,17 +25,17 @@ class SideNav extends React.Component {
         <ul className="site-actions">
           <SideNavItem
             href={this.getUrl(siteId, sideNavPaths.SETTINGS)}
-            icon='settings'
+            icon="settings"
             linkText={sideNavPaths.SETTINGS}
           />
           <SideNavItem
             href={this.getUrl(siteId, sideNavPaths.PUBLISHED)}
-            icon='media'
+            icon="media"
             linkText={sideNavPaths.PUBLISHED}
           />
           <SideNavItem
             href={this.getUrl(siteId, sideNavPaths.BUILDS)}
-            icon='logs'
+            icon="logs"
             linkText={sideNavPaths.BUILDS}
           />
         </ul>

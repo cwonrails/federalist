@@ -3,15 +3,15 @@ import { Link } from 'react-router';
 
 const propTypes = {
   href: React.PropTypes.string,
-  icon: React.PropTypes.string
+  icon: React.PropTypes.string,
 };
 
 const SideNavItem = ({ href, icon, linkText }) =>
-  <li>
-    <Link className={'icon icon-' + icon} to={href}>
+  (<li>
+    <Link className={`icon icon-${icon}`} to={href}>
       {linkText}
     </Link>
-  </li>;
+  </li>);
 
 SideNavItem.propTypes = propTypes;
 

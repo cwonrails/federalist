@@ -1,25 +1,24 @@
 import React from 'react';
-import moment from "moment";
+import moment from 'moment';
 
 const propTypes = {
   site: React.PropTypes.shape({
     publishedAt: React.PropTypes.string,
-  })
+  }),
 };
 
 const getPublishedState = (site) => {
   if (site.publishedAt) {
-    let formattedBuildTime = moment(site.publishedAt).format('MMMM Do YYYY, h:mm:ss a')
+    const formattedBuildTime = moment(site.publishedAt).format('MMMM Do YYYY, h:mm:ss a');
     return `This site was last published at ${formattedBuildTime}.`;
-  } else {
-    return 'Please wait for build to complete or check logs for error message.';
   }
+  return 'Please wait for build to complete or check logs for error message.';
 };
 
 const PublishedState = ({ site = {} }) =>
-  <p>
+  (<p>
     {getPublishedState(site)}
-  </p>
+  </p>);
 
 PublishedState.propTypes = propTypes;
 

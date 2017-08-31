@@ -31,13 +31,13 @@ module.exports = {
       }
       return authorizer.findOne(req.user, site);
     })
-    .then(() => siteSerializer.serialize(site))
-    .then((siteJSON) => {
-      res.json(siteJSON);
-    })
-    .catch((err) => {
-      res.error(err);
-    });
+      .then(() => siteSerializer.serialize(site))
+      .then((siteJSON) => {
+        res.json(siteJSON);
+      })
+      .catch((err) => {
+        res.error(err);
+      });
   },
 
   destroy: (req, res) => {
@@ -104,40 +104,40 @@ module.exports = {
       }
       return authorizer.update(req.user, site);
     })
-    .then(() => {
-      const params = Object.assign(site, req.body);
-      return site.update({
-        demoBranch: params.demoBranch,
-        demoDomain: params.demoDomain,
-        config: params.config,
-        previewConfig: params.previewConfig,
-        demoConfig: params.demoConfig,
-        defaultBranch: params.defaultBranch,
-        domain: params.domain,
-        engine: params.engine,
-      });
-    })
-    .then(model => Build.create({
-      user: req.user.id,
-      site: siteId,
-      branch: model.defaultBranch,
-    }))
-    .then(() => {
-      if (site.demoBranch) {
-        return Build.create({
-          user: req.user.id,
-          site: siteId,
-          branch: site.demoBranch,
+      .then(() => {
+        const params = Object.assign(site, req.body);
+        return site.update({
+          demoBranch: params.demoBranch,
+          demoDomain: params.demoDomain,
+          config: params.config,
+          previewConfig: params.previewConfig,
+          demoConfig: params.demoConfig,
+          defaultBranch: params.defaultBranch,
+          domain: params.domain,
+          engine: params.engine,
         });
-      }
-      return null;
-    })
-    .then(() => siteSerializer.serialize(site))
-    .then((siteJSON) => {
-      res.send(siteJSON);
-    })
-    .catch((err) => {
-      res.error(err);
-    });
+      })
+      .then(model => Build.create({
+        user: req.user.id,
+        site: siteId,
+        branch: model.defaultBranch,
+      }))
+      .then(() => {
+        if (site.demoBranch) {
+          return Build.create({
+            user: req.user.id,
+            site: siteId,
+            branch: site.demoBranch,
+          });
+        }
+        return null;
+      })
+      .then(() => siteSerializer.serialize(site))
+      .then((siteJSON) => {
+        res.send(siteJSON);
+      })
+      .catch((err) => {
+        res.error(err);
+      });
   },
 };

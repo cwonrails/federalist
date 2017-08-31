@@ -34,7 +34,6 @@ const createRowsOf = (values, perRow) => {
 };
 
 export class TemplateList extends React.Component {
-
   constructor(props) {
     super(props);
 

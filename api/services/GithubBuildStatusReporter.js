@@ -96,9 +96,9 @@ const reportBuildStatus = (build) => {
     }
     return sendCreateGithubStatusRequest(githubClient, options);
   })
-  .catch((error) => {
-    logger.error('Error reporting build status to GitHub: ', error);
-  });
+    .catch((error) => {
+      logger.error('Error reporting build status to GitHub: ', error);
+    });
 };
 
 

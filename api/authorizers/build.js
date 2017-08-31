@@ -11,7 +11,7 @@ const authorize = (user, build) => (
       }
       return Promise.reject(403);
     }
-  )
+    )
 );
 
 const findOne = (user, build) => authorize(user, build);
